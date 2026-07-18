@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects | Musa James Paul</title>
+  <meta name="description" content="A selection of projects built by Musa James Paul, Cyber Security student at Miva Open University.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="music-popup-backdrop" id="music-popup-backdrop" hidden>
+    <div class="music-popup" role="dialog" aria-modal="true" aria-labelledby="music-popup-title" id="music-popup" tabindex="-1">
+      <p class="eyebrow">Audio</p>
+      <h2 id="music-popup-title">Play background music?</h2>
+      <p class="music-popup-text">This site has a short instrumental track that can play quietly in the background while you browse.</p>
+      <div class="music-popup-actions">
+        <button type="button" class="btn btn-primary" id="music-yes">Yes, play music</button>
+        <button type="button" class="btn btn-outline" id="music-no">No thanks</button>
+      </div>
+    </div>
+  </div>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <nav class="navbar" aria-label="Primary">
+      <a href="index.html" class="logo" aria-label="Musa James Paul, home">
+        <span class="logo-mark">MJP</span>
+        <span class="status-pill">
+          <span class="status-dot" aria-hidden="true"></span>
+          systems online
+        </span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="planner.html">Planner</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <section class="page-intro">
+      <p class="eyebrow">Projects</p>
+      <h1 class="page-intro-heading">A few things I've built</h1>
+      <p class="page-intro-text">Small, focused tools rather than one giant app, each one taught me something different about how the pieces fit together.</p>
+    </section>
+
+    <!-- PROJECTS LIST: Each project is an <article>, the correct element
+         for a piece of content that could stand alone and make sense
+         independently of the rest of the page, which is exactly what a
+         project write-up is. Screenshots below are real captures of the
+         actual working code, not stock images, so they show genuine
+         project output rather than decoration. -->
+    <section class="projects-list">
+
+      <article class="project-full">
+        <div class="project-full-media">
+          <img src="images/project-crypto-ticker.png" alt="Terminal output of the live crypto price ticker script, showing a formatted Bitcoin price and last updated time" loading="lazy">
+        </div>
+        <div class="project-full-body">
+          <p class="work-tag">Node.js / API</p>
+          <h2>Live Crypto Price Ticker</h2>
+          <p>
+            A small Node.js script that polls a live price API for
+            Bitcoin's current value every ten seconds using axios, then
+            clears and redraws the terminal with a formatted ticker line
+            and a last updated timestamp. It is a simple project on the
+            surface, but it covers async/await, error handling around a
+            network call, and working with setInterval to keep data
+            fresh without the user doing anything.
+          </p>
+          <!-- SIMULATED LINK: No live deployment for a console script,
+               so this points to a placeholder GitHub repository path.
+               Replace with musa's actual repo URL once the code is
+               pushed, the brief explicitly allows simulated links where
+               a live one is not available. -->
+          <a href="https://github.com/musajamespaul/crypto-price-ticker" class="text-link" target="_blank" rel="noopener">View repository (simulated link) &rarr;</a>
+        </div>
+      </article>
+
+      <article class="project-full project-full-reverse">
+        <div class="project-full-media">
+          <img src="images/project-watermarker.png" alt="Python code for an image watermarking tool using the Pillow library" loading="lazy">
+        </div>
+        <div class="project-full-body">
+          <p class="work-tag">Python / Pillow</p>
+          <h2>Image Watermarker</h2>
+          <p>
+            A Python utility built on the Pillow library that stamps a
+            semi transparent text watermark onto the bottom right corner
+            of any image, then exports a clean copy ready to share. It
+            works by creating a fully transparent overlay layer the same
+            size as the source image, drawing the watermark text onto
+            that layer, and compositing the two together before saving
+            the result as a new file.
+          </p>
+          <a href="https://github.com/musajamespaul/image-watermarker" class="text-link" target="_blank" rel="noopener">View repository (simulated link) &rarr;</a>
+        </div>
+      </article>
+
+      <article class="project-full">
+        <div class="project-full-media">
+          <img src="images/project-markdown-preview.png" alt="Browser based markdown editor showing a text area and a live rendered preview panel" loading="lazy">
+        </div>
+        <div class="project-full-body">
+          <p class="work-tag">JavaScript / DOM</p>
+          <h2>Markdown Live Preview</h2>
+          <p>
+            A two panel browser tool, a plain textarea on one side and a
+            live rendered preview on the other. It listens for the
+            textarea's input event and, on every keystroke, runs the
+            typed markdown through the marked.js library and writes the
+            resulting HTML straight into the preview panel, so formatting
+            appears instantly with no separate "render" button needed.
+          </p>
+          <a href="https://github.com/musajamespaul/markdown-live-preview" class="text-link" target="_blank" rel="noopener">View repository (simulated link) &rarr;</a>
+        </div>
+      </article>
+
+    </section>
+
+    <section class="cta-section">
+      <h2>Want to see how I stay organised too?</h2>
+      <a href="planner.html" class="btn btn-primary">Check Out The Planner</a>
+    </section>
+
+  </main>
+
+  <audio id="bg-audio" loop preload="none" class="bg-audio" aria-hidden="true">
+    <source src="audio/ambient.mp3" type="audio/mpeg">
+  </audio>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-name">Musa James Paul</p>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="planner.html">Planner</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <p class="footer-copy">&copy; 2026 Musa James Paul. COS 106 Portfolio Project, Miva Open University.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

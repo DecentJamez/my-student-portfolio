@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- VIEWPORT META TAG: Tells mobile browsers to render the page at the
+       device's actual width instead of zooming out to fit a desktop layout.
+       Without this, the site would look tiny and unreadable on a phone. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Musa James Paul | Student Portfolio</title>
+  <meta name="description" content="Portfolio and academic management site for Musa James Paul, Cyber Security student at Miva Open University.">
+
+  <!-- GOOGLE FONTS: Three typefaces, each doing a different job.
+       Fraunces is a serif with sharp, high-contrast strokes, used only for
+       big display headings, it gives the page an editorial, confident voice.
+       Inter is a clean, highly legible sans-serif, used for all body text
+       so long paragraphs stay easy to read.
+       JetBrains Mono is a monospace font, used for anything meant to look
+       like code or terminal output, which ties into the Cyber Security
+       theme running through the site. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- EXTERNAL STYLESHEET: All visual styling lives in one file so the
+       browser only has to fetch it once and every page can share it. -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- MUSIC CONSENT POPUP: Shown once, automatically, the moment the page
+       loads. Browsers refuse to autoplay audio with sound until the
+       visitor has interacted with the page in some way, a popup with a
+       button is a clean way to both ask permission and provide that
+       required interaction in the same click. role="dialog" and
+       aria-modal="true" tell assistive technology this is a modal window
+       that temporarily takes over interaction, and JavaScript moves
+       keyboard focus onto it as soon as it appears so keyboard users are
+       not left tabbing through content underneath it. -->
+  <div class="music-popup-backdrop" id="music-popup-backdrop" hidden>
+    <div class="music-popup" role="dialog" aria-modal="true" aria-labelledby="music-popup-title" id="music-popup" tabindex="-1">
+      <p class="eyebrow">Audio</p>
+      <h2 id="music-popup-title">Play background music?</h2>
+      <p class="music-popup-text">This site has a short instrumental track that can play quietly in the background while you browse.</p>
+      <div class="music-popup-actions">
+        <button type="button" class="btn btn-primary" id="music-yes">Yes, play music</button>
+        <button type="button" class="btn btn-outline" id="music-no">No thanks</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKIP LINK: Hidden until focused. Lets someone using a keyboard or
+       screen reader jump straight to the main content instead of tabbing
+       through the whole navigation menu first. This is an accessibility
+       requirement a lecturer or examiner may specifically check for. -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- NAVIGATION BAR: <header> and <nav> are semantic HTML5 elements, they
+       tell the browser and assistive technology that this block is the
+       page's primary navigation, not just a generic <div>. The bar is
+       fixed to the top of the viewport in CSS. JavaScript listens for the
+       scroll event and adds a "scrolled" class once the user scrolls past
+       a small threshold, which CSS uses to fade in a solid background so
+       the links stay readable once the transparent hero has scrolled away. -->
+  <header class="site-header" id="site-header">
+    <nav class="navbar" aria-label="Primary">
+      <a href="index.html" class="logo" aria-label="Musa James Paul, home">
+        <span class="logo-mark">MJP</span>
+        <!-- STATUS INDICATOR: A small pulsing dot with the label "online".
+             This is a deliberate nod to a security operations dashboard,
+             where a green dot means a system is active and monitored. It
+             reflects the Cyber Security subject rather than decorating
+             for its own sake. -->
+        <span class="status-pill">
+          <span class="status-dot" aria-hidden="true"></span>
+          systems online
+        </span>
+      </a>
+
+      <!-- NAV LINKS AS A LIST: <ul>/<li> is the correct semantic choice
+           for a set of navigation links, screen readers announce it as a
+           list of a known length ("list of 5 items") which helps users
+           orient themselves. -->
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="planner.html">Planner</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <!-- MOBILE MENU TOGGLE: Only visible below the tablet breakpoint.
+           A <button> is used instead of a <div> because buttons are
+           natively focusable and operable with the keyboard or a screen
+           reader, a clickable div is not. JavaScript toggles the
+           .nav-open class on the <body> to slide the menu into view. -->
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- HERO SECTION: Styled as a security terminal window rather than a
+         generic photo-and-headline hero. This is the site's signature
+         element, it sets up the Cyber Security identity immediately
+         instead of announcing it later. The lines inside are typed out
+         one character at a time by JavaScript on page load, like a boot
+         sequence or a scan log, then a blinking cursor is left in place. -->
+    <section class="hero" aria-label="Introduction">
+      <div class="terminal">
+        <!-- TERMINAL TITLE BAR: The three dots mimic a desktop app window
+             (close, minimise, maximise). Purely visual, marked
+             aria-hidden so screen readers skip straight to the real
+             content below. -->
+        <div class="terminal-bar" aria-hidden="true">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-gold"></span>
+          <span class="dot dot-green"></span>
+          <span class="terminal-title">musa@portfolio: ~</span>
+        </div>
+
+        <!-- TERMINAL BODY: Each <p> is one "typed" line. The actual text
+             is written in the HTML for anyone with JavaScript disabled or
+             using a screen reader, JS then visually clears and retypes it
+             for the animation, so nobody is left with missing content. -->
+        <div class="terminal-body">
+          <p class="type-line" data-line="whoami"><span class="prompt">&gt;</span> <span class="typed"></span></p>
+          <p class="type-line" data-line="Musa James Paul"><span class="prompt">&gt;&gt;</span> <span class="typed"></span></p>
+          <p class="type-line" data-line="role: Cyber Security student, Miva Open University"><span class="prompt">&gt;&gt;</span> <span class="typed"></span></p>
+          <p class="type-line" data-line="status: open to new opportunities in tech"><span class="prompt">&gt;&gt;</span> <span class="typed"></span></p>
+          <p class="terminal-cursor" aria-hidden="true">_</p>
+        </div>
+      </div>
+
+      <h1 class="hero-heading">Musa James Paul</h1>
+      <p class="hero-tagline">Cyber Security student. Career switcher building toward a future in tech.</p>
+
+      <!-- CALL TO ACTION BUTTONS: Two links styled as buttons. The first
+           is filled (primary action), the second is outlined (secondary
+           action), a common convention that tells the eye which action
+           matters most without needing extra text. -->
+      <div class="hero-actions">
+        <a href="projects.html" class="btn btn-primary">View My Work</a>
+        <a href="contact.html" class="btn btn-outline">Get In Touch</a>
+      </div>
+    </section>
+
+    <!-- WHO I AM SECTION: The brief biography required by the brief.
+         Laid out as a two-column CSS Grid on wide screens (text next to
+         a visual mark) which collapses to a single column on mobile. -->
+    <section class="about-preview" id="who-i-am">
+      <div class="section-heading">
+        <span class="eyebrow">Who I Am</span>
+        <h2>A brief introduction</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            I am a Cyber Security student at Miva Open University, currently
+            working toward a career switch into the tech industry. I have
+            lived in a few different parts of Nigeria, completing my primary
+            and secondary education in Abuja before moving to Kaduna for my
+            higher institution studies.
+          </p>
+          <p>
+            Outside of coursework, I build small projects to practise what I
+            am learning, from live data tools to browser based utilities.
+            When I am not at the keyboard, I am usually gaming, studying, or
+            listening to music.
+          </p>
+
+          <!-- QUICK FACTS LIST: An unordered list because the three facts
+               have no required order, they are just related snippets a
+               visitor might scan quickly. -->
+          <ul class="quick-facts">
+            <li><span class="fact-label">Studying</span> Cyber Security, Miva Open University</li>
+            <li><span class="fact-label">Based in</span> Nigeria</li>
+            <li><span class="fact-label">Focus</span> Career transition into tech</li>
+          </ul>
+
+          <a href="about.html" class="text-link">Read more about me &rarr;</a>
+        </div>
+
+        <!-- AVATAR MARK: Real profile photo, dropped into the same
+             hexagon frame the placeholder used, a nod to the hex/shield
+             shapes common in security branding. The clip-path hexagon
+             shape lives entirely in CSS on .avatar-frame, so no matter
+             what image sits inside it, it always gets cropped to the
+             same shape. object-fit: cover (set on .avatar-photo in
+             style.css) keeps the photo from stretching out of
+             proportion no matter what size the frame renders at. -->
+        <div class="avatar-frame" role="img" aria-label="Portrait of Musa James Paul">
+          <img src="images/profile.jpg" alt="Musa James Paul" class="avatar-photo">
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED PROJECTS PREVIEW: Three real mini projects, shown with
+         icons rather than 01/02/03 numbering, these three projects are
+         not a sequence or a process, numbering them would imply an order
+         that does not exist, so an icon per category is more honest. -->
+    <section class="featured-projects" id="featured-work">
+      <div class="section-heading">
+        <span class="eyebrow">What I Build</span>
+        <h2>Featured projects</h2>
+      </div>
+
+      <!-- PROJECT CARDS: Marked up as <article> because each card is a
+           self contained piece of content that would still make sense if
+           pulled out and syndicated elsewhere, that is exactly what
+           <article> is for in the HTML5 spec. -->
+      <div class="project-grid">
+        <article class="project-card">
+          <div class="project-icon" aria-hidden="true">
+            <!-- Simple inline SVG line-chart icon, avoids depending on an
+                 icon font or external image just for a small glyph. -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M3 17l5-5 4 4 9-9" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14 6h6v6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="project-tag">Node.js / API</p>
+          <h3>Live Crypto Ticker</h3>
+          <p>A console based ticker that polls a live pricing API every ten seconds and prints a formatted, self clearing Bitcoin price feed with a timestamp.</p>
+          <a href="projects.html" class="text-link">View project &rarr;</a>
+        </article>
+
+        <article class="project-card">
+          <div class="project-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <rect x="3" y="4" width="18" height="14" rx="1.5"/>
+              <circle cx="8.5" cy="9.5" r="1.5"/>
+              <path d="M21 15l-5-5-9 8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="project-tag">Python / Pillow</p>
+          <h3>Image Watermarker</h3>
+          <p>A script that stamps a semi transparent text watermark onto any image, positioning it automatically and exporting a clean, ready to share copy.</p>
+          <a href="projects.html" class="text-link">View project &rarr;</a>
+        </article>
+
+        <article class="project-card">
+          <div class="project-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M4 6h7M4 10h5M4 14h6" stroke-linecap="round"/>
+              <path d="M14 6l3 3-3 3M20 12v4a2 2 0 01-2 2h-4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="project-tag">JavaScript / DOM</p>
+          <h3>Markdown Live Preview</h3>
+          <p>A two pane editor where typed markdown renders as formatted HTML instantly on the right, useful for drafting notes or README files.</p>
+          <a href="projects.html" class="text-link">View project &rarr;</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- BACKGROUND AUDIO ELEMENT: Satisfies the brief's requirement to
+         include audio or video somewhere on the site, but instead of a
+         visible player section, this track plays quietly behind the
+         whole page once the visitor opts in through the popup below.
+         No "controls" attribute, so the browser draws no visible player
+         bar, and no "autoplay" either, since browsers block audio with
+         sound from autoplaying without a user gesture anyway, the popup
+         click is what counts as that gesture. "loop" makes the track
+         repeat for as long as someone stays on the page.
+         NOTE FOR MUSA: drop an actual audio file at audio/ambient.mp3
+         (a soft instrumental works well) to replace this placeholder
+         path. -->
+    <audio id="bg-audio" loop preload="none" class="bg-audio" aria-hidden="true">
+      <source src="audio/ambient.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- CALL TO ACTION / CLOSING SECTION: A short, deliberate closing
+         statement paired with one final contact link, so a visitor who
+         has scrolled the whole page always ends on a clear next step. -->
+    <section class="cta-section">
+      <h2>Let's build something secure together.</h2>
+      <a href="contact.html" class="btn btn-primary">Start a Conversation</a>
+    </section>
+
+  </main>
+
+  <!-- FOOTER: Repeats the navigation for accessibility (some users
+       scroll straight to the bottom looking for links) and holds the
+       copyright line. -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-name">Musa James Paul</p>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="planner.html">Planner</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <p class="footer-copy">&copy; 2026 Musa James Paul. COS 106 Portfolio Project, Miva Open University.</p>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT: Loaded at the very end of <body> rather than in <head>,
+       this way the browser has already built the full page (the DOM)
+       before main.js runs, so scripts can safely look up elements by ID
+       without needing to wrap everything in a DOMContentLoaded listener. -->
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,1291 @@
+/* ============================================================
+   COS 106 PORTFOLIO STYLESHEET
+   Author: Musa James Paul
+
+   This file is organised top to bottom in the order the browser
+   will actually use it: resets and variables first, then layout
+   pieces shared by every page (nav, footer), then the sections
+   specific to the homepage, then responsive breakpoints last.
+   Every page in the site links to this one file.
+   ============================================================ */
+
+/* CSS CUSTOM PROPERTIES (VARIABLES): Defined once in :root so
+   every colour and font in the site is set from a single place.
+   If Musa wants to darken the navy or swap the gold for a
+   different shade later, it only needs to change here and the
+   whole site updates automatically instead of hunting through
+   every selector. */
+:root {
+  /* Colour palette: navy and gold, a deliberate move away from
+     the blue-and-silver look used elsewhere in the class. */
+  --navy-950: #060f24;   /* deepest background, used behind the terminal */
+  --navy-900: #0a1f44;   /* primary page background */
+  --indigo-700: #16305c; /* secondary panels, cards, the nav bar */
+  --gold-400: #d4af37;   /* primary accent: links, buttons, headings */
+  --gold-300: #e8c766;   /* lighter gold, used for hover states */
+  --cream-100: #f2efe6;  /* main text colour on dark backgrounds */
+  --slate-400: #6b7a94;  /* muted text, borders, secondary labels */
+
+  /* Typography: three families, each with one job (see index.html
+     comment on the <link> tags for the reasoning). */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Courier New", monospace;
+
+  /* Fluid type scale using clamp(), so headings resize smoothly
+     between a mobile minimum and a desktop maximum without
+     needing a separate font-size rule inside every breakpoint. */
+  --step-hero: clamp(2.5rem, 6vw, 5rem);
+  --step-h2: clamp(1.75rem, 3.5vw, 2.75rem);
+  --step-h3: clamp(1.15rem, 2vw, 1.4rem);
+
+  /* Shared spacing and radius values so sections feel consistent
+     without every rule repeating the same magic numbers. */
+  --gap-section: clamp(4rem, 8vw, 7rem);
+  --radius-md: 14px;
+  --radius-sm: 8px;
+}
+
+/* CSS RESET: Browsers ship with their own default spacing and
+   sizing for elements, which differs slightly between browsers.
+   Zeroing margin/padding and switching every element to
+   border-box sizing gives a predictable, consistent starting
+   point to design on top of. */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth; /* smooth scrolling for in-page anchor links */
+}
+
+body {
+  background: var(--navy-900);
+  color: var(--cream-100);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden; /* prevents horizontal scroll from full-bleed sections */
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* REDUCED MOTION: Respects the operating system setting some
+   users turn on if animation causes discomfort or distraction.
+   When set, this removes almost all transition and animation
+   timing so the site becomes effectively static. This is an
+   accessibility requirement, not a nice-to-have. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* SKIP LINK: Sits off-screen until it receives keyboard focus
+   (Tab key), at which point it slides into view at the top left.
+   This lets keyboard and screen reader users bypass the whole
+   navigation menu and jump straight into the page content. */
+.skip-link {
+  position: absolute;
+  top: -60px;
+  left: 1rem;
+  background: var(--gold-400);
+  color: var(--navy-950);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  z-index: 1000;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0; /* shorthand for top/right/bottom/left: pins to top edge */
+  z-index: 100;
+  background: transparent;
+  transition: background-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* SCROLLED STATE: JavaScript adds this class once the user has
+   scrolled past a small threshold. Before that point the nav is
+   transparent so it sits cleanly over the terminal hero, after
+   that point it gets a solid backing so text stays readable over
+   whatever content is now behind it. */
+.site-header.scrolled {
+  background: rgba(6, 15, 36, 0.9);
+  box-shadow: 0 1px 0 rgba(212, 175, 55, 0.15);
+  backdrop-filter: blur(8px);
+}
+
+.navbar {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.logo-mark {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--gold-400);
+  border: 1.5px solid var(--gold-400);
+  padding: 0.3rem 0.55rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}
+
+/* STATUS PILL: A small "systems online" indicator styled after a
+   monitoring dashboard, reinforcing the Cyber Security theme
+   established in the hero. Hidden on the smallest screens where
+   space is tight, the logo alone is enough there. */
+.status-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6);
+  animation: pulse 2.4s infinite;
+}
+
+/* PULSE KEYFRAME: A gentle expanding ring around the status dot,
+   mimicking a heartbeat/ping animation common in monitoring UIs. */
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.55); }
+  70%  { box-shadow: 0 0 0 8px rgba(74, 222, 128, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  font-size: 0.95rem;
+}
+
+.nav-links a {
+  position: relative;
+  padding: 0.3rem 0;
+  color: var(--cream-100);
+  transition: color 0.2s ease;
+}
+
+/* UNDERLINE HOVER EFFECT: An empty pseudo-element that starts at
+   zero width and expands to full width on hover/focus. Doing this
+   with a pseudo-element instead of a text-decoration underline
+   gives control over thickness, colour, and the transition curve. */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: var(--gold-400);
+  transition: width 0.25s ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  color: var(--gold-300);
+}
+
+/* MOBILE MENU TOGGLE: Hidden on wide screens, shown only below
+   the tablet breakpoint. Built as three <span> bars styled into
+   a hamburger icon, JavaScript toggles a class that animates them
+   into an X shape when the menu is open. */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+}
+
+.menu-toggle span {
+  width: 24px;
+  height: 2px;
+  background: var(--cream-100);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+/* ============================================================
+   HERO / TERMINAL
+   ============================================================ */
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8rem 1.5rem 4rem;
+  /* RADIAL GRADIENT BACKGROUND: A soft glow behind the terminal
+     rather than a flat colour, gives the hero some depth without
+     needing an actual image file. */
+  background: radial-gradient(circle at 50% 20%, var(--indigo-700) 0%, var(--navy-950) 65%);
+}
+
+/* TERMINAL WINDOW: The signature visual element of the site. Styled
+   to resemble a desktop terminal application, chosen deliberately
+   because it reflects the Cyber Security subject matter rather than
+   a generic photo-and-gradient hero. */
+.terminal {
+  width: min(640px, 100%);
+  background: rgba(10, 20, 44, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: var(--radius-md);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  text-align: left;
+  margin-bottom: 2.5rem;
+}
+
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot-red  { background: #f87171; }
+.dot-gold { background: var(--gold-400); }
+.dot-green{ background: #4ade80; }
+
+.terminal-title {
+  margin-left: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--slate-400);
+}
+
+.terminal-body {
+  padding: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 2vw, 1rem);
+}
+
+.type-line {
+  min-height: 1.6em; /* reserves space so lines do not jump as text types in */
+  color: var(--cream-100);
+}
+
+.prompt {
+  color: var(--gold-400);
+  margin-right: 0.5rem;
+}
+
+/* BLINKING CURSOR: A simple underscore that fades in and out on a
+   loop, drawn with CSS animation rather than an image or GIF, this
+   keeps the effect crisp at any screen size and costs nothing to
+   load. */
+.terminal-cursor {
+  font-family: var(--font-mono);
+  color: var(--gold-400);
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.hero-heading {
+  font-family: var(--font-display);
+  font-size: var(--step-hero);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.hero-tagline {
+  margin-top: 0.9rem;
+  color: var(--slate-400);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  max-width: 38ch;
+}
+
+.hero-actions {
+  margin-top: 2.2rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* BUTTON BASE: Shared rules for every button-styled link, the
+   primary/outline variants below only override colour and border. */
+.btn {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  display: inline-block;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--gold-400);
+  color: var(--navy-950);
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: var(--gold-300);
+}
+
+.btn-outline {
+  border-color: var(--gold-400);
+  color: var(--gold-400);
+}
+
+.btn-outline:hover,
+.btn-outline:focus-visible {
+  background: rgba(212, 175, 55, 0.1);
+}
+
+/* ============================================================
+   SHARED SECTION HEADINGS
+   ============================================================ */
+
+section {
+  padding: var(--gap-section) 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* EYEBROW LABEL: A small uppercase label above each section
+   heading, a common editorial device that gives a section a quiet
+   category name before the reader hits the big heading. */
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-400);
+  margin-bottom: 0.75rem;
+}
+
+.section-heading h2 {
+  font-family: var(--font-display);
+  font-size: var(--step-h2);
+  font-weight: 600;
+}
+
+/* ============================================================
+   ABOUT PREVIEW ("WHO I AM")
+   ============================================================ */
+
+/* CSS GRID: Two equal columns on wide screens, text on the left
+   and the avatar mark on the right. Grid is used here rather than
+   Flexbox because this is a fixed two-dimensional layout (one row,
+   two columns) with predictable column widths, which is exactly
+   what Grid is designed for. */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.about-text p {
+  margin-bottom: 1.1rem;
+  color: var(--cream-100);
+}
+
+.quick-facts {
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  color: var(--slate-400);
+}
+
+.fact-label {
+  font-family: var(--font-mono);
+  color: var(--gold-400);
+  margin-right: 0.5rem;
+}
+
+.text-link {
+  color: var(--gold-400);
+  font-weight: 600;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.text-link:hover,
+.text-link:focus-visible {
+  border-color: var(--gold-400);
+}
+
+/* AVATAR FRAME: A hexagon cut using clip-path, holding the real
+   profile photo. The hexagon shape and gold border are a deliberate
+   echo of the shield/hex motifs common in security branding, tying
+   the portrait into the same visual language as the terminal hero
+   instead of using a plain circular photo frame. */
+.avatar-frame {
+  width: min(280px, 100%);
+  aspect-ratio: 1 / 1.05;
+  margin: 0 auto;
+  background: linear-gradient(160deg, var(--indigo-700), var(--navy-950));
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--gold-400);
+  position: relative;
+  overflow: hidden; /* keeps the photo cropped to the hexagon even before clip-path applies to its own box */
+}
+
+/* AVATAR PHOTO: object-fit: cover fills the whole hexagon frame
+   without distorting the photo's proportions, cropping in on the
+   longer dimension instead of squashing it. width/height 100% makes
+   it fill the .avatar-frame box exactly so the clip-path on the
+   parent crops it into the hexagon shape. */
+.avatar-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ============================================================
+   FEATURED PROJECTS
+   ============================================================ */
+
+/* AUTO-FIT GRID: Cards flow into as many columns as will fit at a
+   minimum width of 260px, then wrap to fewer columns automatically
+   as the viewport narrows. This removes the need for a manual
+   three-column-to-one-column media query rule later. */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.75rem;
+}
+
+.project-card {
+  background: var(--indigo-700);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: var(--radius-md);
+  padding: 2rem 1.75rem;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--gold-400);
+}
+
+.project-icon {
+  width: 42px;
+  height: 42px;
+  color: var(--gold-400);
+  margin-bottom: 1.25rem;
+}
+
+.project-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+}
+
+.project-card h3 {
+  font-family: var(--font-display);
+  font-size: var(--step-h3);
+  margin-bottom: 0.6rem;
+}
+
+.project-card p {
+  color: var(--cream-100);
+  font-size: 0.92rem;
+  margin-bottom: 1rem;
+}
+
+/* ============================================================
+   BACKGROUND AUDIO (VISUALLY HIDDEN)
+   ============================================================ */
+
+/* The audio element has no "controls" attribute so browsers do not
+   draw a player bar for it, this rule is a backup for any browser
+   that renders something regardless, keeping it out of the layout
+   without using display:none (which some browsers use as a signal
+   to stop the element from working at all). */
+.bg-audio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+/* ============================================================
+   MUSIC CONSENT POPUP
+   ============================================================ */
+
+/* BACKDROP: A full screen, semi transparent overlay that sits above
+   everything else and dims the page behind it, a standard pattern
+   for telling the eye "this is the only thing you can interact with
+   right now". The [hidden] attribute (toggled in JavaScript) removes
+   it from layout entirely when not in use, rather than just hiding
+   it visually, which also keeps it out of the tab order. */
+.music-popup-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(6, 15, 36, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  /* SLIDE-DOWN ANIMATION: The popup itself animates in from just
+     above the viewport, matching the "pops up at the top of the
+     screen" behaviour asked for, rather than a plain instant fade. */
+  animation: popup-fade 0.25s ease;
+}
+
+/* THE ACTUAL BUG FIX: display:flex above always wins over the
+   browser's built-in [hidden] stylesheet rule, because an author
+   class selector outranks the browser's default styles regardless
+   of which one appears "later". Without this rule, toggling the
+   hidden attribute in JavaScript had no visible effect at all, the
+   backdrop stayed flex (and therefore visible) permanently. Writing
+   the [hidden] state explicitly here, using the same class plus
+   attribute selector, gives it the specificity needed to switch the
+   popup off again. */
+.music-popup-backdrop[hidden] {
+  display: none;
+}
+
+@keyframes popup-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Stops the page behind the popup from scrolling while it is open,
+   JavaScript adds this class to <body> alongside showing the popup. */
+body.popup-open {
+  overflow: hidden;
+}
+
+.music-popup {
+  width: min(420px, 100%);
+  background: var(--indigo-700);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: var(--radius-md);
+  padding: 2rem 1.75rem;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  animation: popup-drop 0.35s ease;
+}
+
+/* DROP-IN MOTION: Starts slightly above its final position and
+   settles down, reinforcing that this popped in from the top of the
+   screen rather than just appearing. */
+@keyframes popup-drop {
+  from { transform: translateY(-24px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+.music-popup h2 {
+  font-family: var(--font-display);
+  font-size: var(--step-h3);
+  margin-bottom: 0.75rem;
+}
+
+.music-popup-text {
+  color: var(--slate-400);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.music-popup-actions {
+  display: flex;
+  gap: 0.9rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   ABOUT PAGE: PAGE INTRO BAND
+   ============================================================ */
+
+/* SCREEN-READER-ONLY TEXT: Visually hidden but still announced by
+   assistive tech, used on the table caption below so sighted users
+   are not shown a redundant label right above a table whose columns
+   already explain themselves, while screen reader users still get
+   the extra context. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* PAGE INTRO: A compact version of the homepage hero, shares the
+   same radial glow background so every page feels part of the same
+   site, but does not repeat the full terminal animation, which is
+   kept as a homepage-only first impression. */
+.page-intro {
+  text-align: center;
+  padding: 9rem 1.5rem 4rem;
+  background: radial-gradient(circle at 50% 0%, var(--indigo-700) 0%, var(--navy-950) 70%);
+}
+
+.page-intro-heading {
+  font-family: var(--font-display);
+  font-size: var(--step-hero);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  max-width: 16ch;
+  margin: 0 auto;
+}
+
+.page-intro-text {
+  margin-top: 1rem;
+  color: var(--slate-400);
+  max-width: 42ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ============================================================
+   EDUCATION TABLE
+   ============================================================ */
+
+/* SCROLL WRAPPER: On very small screens a three column table can
+   still get tight. Wrapping it in a horizontally scrollable
+   container means the table never has to squash its own columns
+   illegibly, the visitor can just swipe sideways instead. */
+.table-wrap {
+  overflow-x: auto;
+}
+
+.edu-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 480px; /* keeps columns readable, triggers the scroll wrapper below this width */
+}
+
+.edu-table th,
+.edu-table td {
+  text-align: left;
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.edu-table th {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gold-400);
+}
+
+.edu-table td {
+  color: var(--cream-100);
+  font-size: 0.95rem;
+}
+
+.edu-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ============================================================
+   SKILLS GRID
+   ============================================================ */
+
+.skills-note {
+  color: var(--slate-400);
+  max-width: 46ch;
+  margin: 0.75rem auto 0;
+}
+
+/* CHIP LAYOUT: Flexbox with wrap, not Grid, because these chips
+   have no fixed column relationship to each other, they should
+   simply flow and wrap naturally at whatever width the viewport
+   allows, which is exactly the kind of one-dimensional flow
+   Flexbox is built for. */
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-top: 2rem;
+}
+
+.skill-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--indigo-700);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 999px;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.skill-chip:hover {
+  border-color: var(--gold-400);
+  transform: translateY(-2px);
+}
+
+.skill-cat {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold-400);
+}
+
+/* ============================================================
+   ASPIRATIONS TEXT
+   ============================================================ */
+
+.aspirations-text {
+  max-width: 62ch;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--cream-100);
+  font-size: 1.02rem;
+}
+
+/* ============================================================
+   HOBBIES LIST
+   ============================================================ */
+
+.hobbies-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.hobbies-list li {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--slate-400);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 1.1rem;
+}
+
+/* ============================================================
+   PROJECTS PAGE: FULL PROJECT CARDS
+   ============================================================ */
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-section);
+}
+
+/* TWO COLUMN LAYOUT: Image on one side, write-up on the other.
+   Grid (not Flexbox) is the right tool here specifically because the
+   two columns need to be explicitly sized (a fixed-ish ratio) rather
+   than just flowing based on content width. */
+.project-full {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+/* ALTERNATING LAYOUT: Every second project card swaps which side the
+   image sits on, using CSS order rather than rearranging the HTML,
+   so the source order (image, then body) stays consistent for
+   screen readers regardless of the visual arrangement. Purely a
+   rhythm device, it keeps a long list of similar cards from feeling
+   monotonous to scroll through. */
+.project-full-reverse .project-full-media {
+  order: 2;
+}
+
+.project-full-media img {
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  display: block;
+}
+
+.project-full-body h2 {
+  font-family: var(--font-display);
+  font-size: var(--step-h3);
+  margin: 0.5rem 0 1rem;
+}
+
+.project-full-body p {
+  color: var(--slate-400);
+  margin-bottom: 1.25rem;
+}
+
+/* ============================================================
+   PLANNER PAGE
+   ============================================================ */
+
+.planner-section {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* TASK FORM: Flexbox row on wider screens, the input grows to fill
+   available space (flex: 1) while the button stays its natural
+   width, standard pattern for an input-plus-action row. */
+.task-form {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.task-input {
+  flex: 1;
+  background: var(--indigo-700);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1.1rem;
+  color: var(--cream-100);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+
+.task-input::placeholder {
+  color: var(--slate-400);
+}
+
+.task-input:focus-visible {
+  outline: none;
+  border-color: var(--gold-400);
+}
+
+.task-counter {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--gold-400);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 1rem;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  background: var(--indigo-700);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  animation: task-in 0.2s ease;
+}
+
+/* ENTRANCE ANIMATION: A small rise-and-fade whenever a new <li> is
+   inserted into the DOM, this runs automatically because CSS
+   animations restart whenever an element is newly added to the
+   page, no JavaScript timing code required. */
+@keyframes task-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.task-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.task-checkbox {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--gold-400);
+}
+
+.task-text {
+  flex: 1;
+  font-size: 0.95rem;
+  word-break: break-word;
+}
+
+/* COMPLETED STATE: A strikethrough plus dimmed text, the standard
+   visual convention for "done" in any task list, applied only when
+   JavaScript has added the task-item-done class to this specific
+   <li>. */
+.task-item-done .task-text {
+  text-decoration: line-through;
+  color: var(--slate-400);
+}
+
+.task-delete {
+  background: none;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: var(--radius-sm);
+  color: var(--slate-400);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.task-delete:hover,
+.task-delete:focus-visible {
+  border-color: var(--gold-400);
+  color: var(--gold-400);
+}
+
+.task-empty {
+  text-align: center;
+  color: var(--slate-400);
+  padding: 2rem 1rem;
+  border: 1px dashed rgba(212, 175, 55, 0.2);
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================================
+   CONTACT PAGE
+   ============================================================ */
+
+.contact-section {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-field label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--gold-400);
+}
+
+.form-field input,
+.form-field textarea {
+  background: var(--indigo-700);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1.1rem;
+  color: var(--cream-100);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  resize: vertical;
+}
+
+.form-field input:focus-visible,
+.form-field textarea:focus-visible {
+  outline: none;
+  border-color: var(--gold-400);
+}
+
+/* INVALID STATE: Added and removed by JavaScript in setFieldError(),
+   never written by hand for a specific field, this class is what
+   actually draws the red-tinted border once a field fails
+   validation. A colour outside the site's navy/gold palette is used
+   deliberately here, red is a near-universal signal for "this needs
+   attention", overriding the palette for a functional cue like this
+   is the right call, consistency should not come at the cost of
+   clarity for something a visitor needs to notice immediately. */
+.field-invalid {
+  border-color: #E0665A !important;
+}
+
+.field-error {
+  color: #E0665A;
+  font-size: 0.82rem;
+}
+
+.form-success {
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem 1.1rem;
+  color: var(--gold-300);
+  font-size: 0.9rem;
+}
+
+/* ============================================================
+   CALL TO ACTION
+   ============================================================ */
+
+.cta-section {
+  text-align: center;
+  padding-bottom: calc(var(--gap-section) + 2rem);
+}
+
+.cta-section h2 {
+  font-family: var(--font-display);
+  font-size: var(--step-h2);
+  margin-bottom: 1.75rem;
+  max-width: 20ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.site-footer {
+  background: var(--navy-950);
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
+  padding: 2.5rem 1.5rem;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.footer-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--gold-400);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.25rem;
+  font-size: 0.85rem;
+  color: var(--slate-400);
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  color: var(--gold-300);
+}
+
+.footer-copy {
+  font-size: 0.8rem;
+  color: var(--slate-400);
+}
+
+/* ============================================================
+   SCROLL-REVEAL ANIMATION HOOK
+   ============================================================ */
+
+/* REVEAL-ON-SCROLL: Elements start slightly lower and transparent.
+   JavaScript uses the Intersection Observer API to add the
+   .in-view class once an element scrolls into the viewport, which
+   triggers this transition. Kept as a small, reusable class rather
+   than one-off animations per section so any future section can
+   opt in just by adding class="reveal" in the HTML. */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   TABLET BREAKPOINT (max-width: 1024px)
+   ============================================================ */
+
+@media (max-width: 1024px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .avatar-frame {
+    order: -1; /* shows the avatar above the text on narrower screens */
+    width: min(220px, 60%);
+  }
+
+  .quick-facts {
+    align-items: center;
+  }
+
+  /* PROJECT CARDS STACK: The image/text side-by-side layout only
+     really works with enough width for both to breathe, below
+     tablet width it collapses to a single column, image on top. */
+  .project-full {
+    grid-template-columns: 1fr;
+  }
+
+  .project-full-reverse .project-full-media {
+    order: 0; /* cancels the alternating order once there is only one column, so image always leads */
+  }
+
+  .task-form {
+    flex-direction: column;
+  }
+}
+
+/* ============================================================
+   MOBILE BREAKPOINT (max-width: 768px)
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .status-pill {
+    display: none; /* saves horizontal space next to the logo */
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  /* OFF-CANVAS NAV: The link list is repositioned into a full width
+     dropdown panel that slides down from under the nav bar. It sits
+     just under the layout normally (display: none-equivalent via
+     max-height 0) and expands only when JavaScript adds
+     .nav-open to the body. Using max-height instead of display
+     lets the expand/collapse be animated smoothly, display cannot
+     be transitioned. */
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: var(--navy-950);
+    padding: 0 1.5rem;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .nav-links li {
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 1rem 0;
+  }
+
+  body.nav-open .nav-links {
+    max-height: 400px;
+  }
+
+  /* HAMBURGER TO X ANIMATION: Rotates and repositions the three
+     bars into an X shape when the menu is open. */
+  body.nav-open .menu-toggle span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  body.nav-open .menu-toggle span:nth-child(2) {
+    opacity: 0;
+  }
+  body.nav-open .menu-toggle span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .hero {
+    padding-top: 7rem;
+  }
+
+  .page-intro {
+    padding-top: 7rem;
+  }
+}

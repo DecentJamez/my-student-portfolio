@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planner | Musa James Paul</title>
+  <meta name="description" content="Interactive academic task planner built by Musa James Paul for the COS 106 term project.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="music-popup-backdrop" id="music-popup-backdrop" hidden>
+    <div class="music-popup" role="dialog" aria-modal="true" aria-labelledby="music-popup-title" id="music-popup" tabindex="-1">
+      <p class="eyebrow">Audio</p>
+      <h2 id="music-popup-title">Play background music?</h2>
+      <p class="music-popup-text">This site has a short instrumental track that can play quietly in the background while you browse.</p>
+      <div class="music-popup-actions">
+        <button type="button" class="btn btn-primary" id="music-yes">Yes, play music</button>
+        <button type="button" class="btn btn-outline" id="music-no">No thanks</button>
+      </div>
+    </div>
+  </div>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <nav class="navbar" aria-label="Primary">
+      <a href="index.html" class="logo" aria-label="Musa James Paul, home">
+        <span class="logo-mark">MJP</span>
+        <span class="status-pill">
+          <span class="status-dot" aria-hidden="true"></span>
+          systems online
+        </span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="planner.html" class="active">Planner</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <section class="page-intro">
+      <p class="eyebrow">Planner</p>
+      <h1 class="page-intro-heading">Academic Planner</h1>
+      <p class="page-intro-text">Add tasks, check them off once done, and clear out what you no longer need. Everything here is saved in your browser, so it is still here next time you visit.</p>
+    </section>
+
+    <!-- PLANNER SECTION: The interactive core of this page. The form
+         and list below are plain HTML, all of the actual behaviour
+         (adding, completing, deleting, remembering tasks between
+         visits) is implemented in js/main.js, this file just provides
+         the structure JavaScript hooks into by id. -->
+    <section class="planner-section">
+
+      <!-- TASK FORM: A real <form> element, not a bare input and
+           button, so pressing Enter inside the text field submits it
+           too, not just clicking the button, which is what most
+           people expect from a task input. JavaScript intercepts the
+           submit event and prevents the page from actually reloading
+           (forms reload the page by default), then handles adding the
+           task itself. -->
+      <form class="task-form" id="task-form">
+        <label for="task-input" class="sr-only">New task</label>
+        <input
+          type="text"
+          id="task-input"
+          class="task-input"
+          placeholder="Add a task, e.g. Finish COS 106 planner page"
+          autocomplete="off"
+          maxlength="120"
+          required
+        >
+        <button type="submit" class="btn btn-primary">Add Task</button>
+      </form>
+
+      <!-- TASK COUNTER: Small live status readout, updated by
+           JavaScript every time the list changes, in the same
+           monospace/terminal style used for other status readouts
+           across the site (the nav's "systems online" pill, the
+           hero's boot sequence). aria-live="polite" means screen
+           readers announce changes to this text automatically,
+           without the visitor needing to navigate back to it. -->
+      <p class="task-counter" id="task-counter" aria-live="polite">0 tasks, 0 completed</p>
+
+      <!-- TASK LIST: Starts empty in the HTML on purpose, JavaScript
+           builds every <li> inside it dynamically from the tasks
+           array, and rebuilds it again on every add, complete, or
+           delete action. This is what "dynamic content updates" in
+           the brief actually means in practice, the DOM is generated
+           and regenerated from data, not hand written. -->
+      <ul class="task-list" id="task-list"></ul>
+
+      <!-- EMPTY STATE: Hidden by default with the hidden attribute.
+           JavaScript shows this and hides the list (or the reverse)
+           depending on whether any tasks currently exist, so a first
+           time visitor sees a helpful message instead of a blank
+           rectangle. -->
+      <p class="task-empty" id="task-empty">No tasks yet. Add your first one above.</p>
+    </section>
+
+    <section class="cta-section">
+      <h2>That's the core of the site, want to get in touch?</h2>
+      <a href="contact.html" class="btn btn-primary">Go To Contact</a>
+    </section>
+
+  </main>
+
+  <audio id="bg-audio" loop preload="none" class="bg-audio" aria-hidden="true">
+    <source src="audio/ambient.mp3" type="audio/mpeg">
+  </audio>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-name">Musa James Paul</p>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="planner.html">Planner</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <p class="footer-copy">&copy; 2026 Musa James Paul. COS 106 Portfolio Project, Miva Open University.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

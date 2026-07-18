@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Musa James Paul</title>
+  <meta name="description" content="Get in touch with Musa James Paul, Cyber Security student at Miva Open University.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="music-popup-backdrop" id="music-popup-backdrop" hidden>
+    <div class="music-popup" role="dialog" aria-modal="true" aria-labelledby="music-popup-title" id="music-popup" tabindex="-1">
+      <p class="eyebrow">Audio</p>
+      <h2 id="music-popup-title">Play background music?</h2>
+      <p class="music-popup-text">This site has a short instrumental track that can play quietly in the background while you browse.</p>
+      <div class="music-popup-actions">
+        <button type="button" class="btn btn-primary" id="music-yes">Yes, play music</button>
+        <button type="button" class="btn btn-outline" id="music-no">No thanks</button>
+      </div>
+    </div>
+  </div>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <nav class="navbar" aria-label="Primary">
+      <a href="index.html" class="logo" aria-label="Musa James Paul, home">
+        <span class="logo-mark">MJP</span>
+        <span class="status-pill">
+          <span class="status-dot" aria-hidden="true"></span>
+          systems online
+        </span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="planner.html">Planner</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <section class="page-intro">
+      <p class="eyebrow">Contact</p>
+      <h1 class="page-intro-heading">Let's get in touch</h1>
+      <p class="page-intro-text">Fill out the form below and I'll get back to you. Every field is checked before anything is treated as sent.</p>
+    </section>
+
+    <!-- CONTACT FORM SECTION: novalidate on the <form> switches off the
+         browser's own built-in validation popups, so that the custom
+         JavaScript validation below (which controls exactly how and
+         where errors are shown, in this site's own visual style) is
+         the only validation that runs, rather than fighting with the
+         browser's default bubbles. -->
+    <section class="contact-section">
+      <form class="contact-form" id="contact-form" novalidate>
+
+        <!-- NAME FIELD -->
+        <div class="form-field">
+          <label for="name-input">Full Name</label>
+          <input type="text" id="name-input" name="name" autocomplete="name">
+          <!-- ERROR MESSAGE: Empty and hidden until JavaScript decides
+               a field is invalid, at which point it fills in the
+               specific reason and removes the hidden attribute.
+               role="alert" makes screen readers announce it the
+               moment it appears, without the visitor needing to
+               navigate to it manually. -->
+          <p class="field-error" id="name-error" role="alert" hidden></p>
+        </div>
+
+        <!-- EMAIL FIELD -->
+        <div class="form-field">
+          <label for="email-input">Email Address</label>
+          <input type="email" id="email-input" name="email" autocomplete="email">
+          <p class="field-error" id="email-error" role="alert" hidden></p>
+        </div>
+
+        <!-- PHONE FIELD: type="tel" brings up a numeric keypad on
+             phones, but does not stop letters being typed on a
+             physical keyboard, so the "digits only" rule from the
+             brief still has to be enforced in JavaScript, this
+             attribute is only a mobile UX nicety, not real
+             validation. -->
+        <div class="form-field">
+          <label for="phone-input">Phone Number</label>
+          <input type="tel" id="phone-input" name="phone" autocomplete="tel">
+          <p class="field-error" id="phone-error" role="alert" hidden></p>
+        </div>
+
+        <!-- MESSAGE FIELD -->
+        <div class="form-field">
+          <label for="message-input">Message</label>
+          <textarea id="message-input" name="message" rows="5"></textarea>
+          <p class="field-error" id="message-error" role="alert" hidden></p>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Send Message</button>
+
+        <!-- SUCCESS MESSAGE: There is no real backend behind this
+             form (it is a static site), so nothing is actually sent
+             anywhere. Once every field passes validation, JavaScript
+             shows this message and resets the form, simulating what
+             a real submission confirmation would look like. -->
+        <p class="form-success" id="form-success" role="status" hidden>Message validated successfully. In a live version of this site, this is where the message would be sent.</p>
+      </form>
+    </section>
+
+  </main>
+
+  <audio id="bg-audio" loop preload="none" class="bg-audio" aria-hidden="true">
+    <source src="audio/ambient.mp3" type="audio/mpeg">
+  </audio>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-name">Musa James Paul</p>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="planner.html">Planner</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <p class="footer-copy">&copy; 2026 Musa James Paul. COS 106 Portfolio Project, Miva Open University.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

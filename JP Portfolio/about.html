@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | Musa James Paul</title>
+  <meta name="description" content="Educational background, technical skills, career goals, and interests of Musa James Paul, Cyber Security student at Miva Open University.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- MUSIC CONSENT POPUP: The same popup that appears on the homepage,
+       repeated here so the background track is available site wide, not
+       just to visitors who happen to land on index.html first. The audio
+       element further down has the same id, so main.js controls it the
+       same way on every page without needing page-specific code. -->
+  <div class="music-popup-backdrop" id="music-popup-backdrop" hidden>
+    <div class="music-popup" role="dialog" aria-modal="true" aria-labelledby="music-popup-title" id="music-popup" tabindex="-1">
+      <p class="eyebrow">Audio</p>
+      <h2 id="music-popup-title">Play background music?</h2>
+      <p class="music-popup-text">This site has a short instrumental track that can play quietly in the background while you browse.</p>
+      <div class="music-popup-actions">
+        <button type="button" class="btn btn-primary" id="music-yes">Yes, play music</button>
+        <button type="button" class="btn btn-outline" id="music-no">No thanks</button>
+      </div>
+    </div>
+  </div>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- NAVIGATION BAR: Identical structure to the homepage, only the
+       "active" class has moved to the About link, so a visitor can
+       always see which page they are currently on. -->
+  <header class="site-header" id="site-header">
+    <nav class="navbar" aria-label="Primary">
+      <a href="index.html" class="logo" aria-label="Musa James Paul, home">
+        <span class="logo-mark">MJP</span>
+        <span class="status-pill">
+          <span class="status-dot" aria-hidden="true"></span>
+          systems online
+        </span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="planner.html">Planner</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- PAGE INTRO BAND: A shorter version of the homepage hero, same
+         radial glow background so the two pages feel like one site, but
+         without the full terminal boot animation, that effect is reserved
+         for the homepage so it stays a first-impression moment rather
+         than something repeated on every page. -->
+    <section class="page-intro">
+      <p class="eyebrow">About</p>
+      <h1 class="page-intro-heading">Get to know me a little better</h1>
+      <p class="page-intro-text">My education, the skills I am building, where I am headed, and what I do outside of the keyboard.</p>
+    </section>
+
+    <!-- EDUCATIONAL BACKGROUND SECTION: Uses a real HTML <table>, the
+         correct element for tabular data with column relationships
+         (stage, institution, location all belong to the same row), a
+         list of <li> items would lose that column structure. This also
+         satisfies the brief's requirement to demonstrate table markup
+         somewhere on the site. -->
+    <section class="edu-section">
+      <div class="section-heading">
+        <span class="eyebrow">Education</span>
+        <h2>Educational Background</h2>
+      </div>
+
+      <div class="table-wrap">
+        <table class="edu-table">
+          <caption class="sr-only">Stages of education, the institution attended, and the location</caption>
+          <thead>
+            <tr>
+              <th scope="col">Stage</th>
+              <th scope="col">Institution</th>
+              <th scope="col">Location</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Primary &amp; Secondary School</td>
+              <td>Completed schooling</td>
+              <td>Abuja, Nigeria</td>
+            </tr>
+            <tr>
+              <td>Higher Institution</td>
+              <td>Undergraduate studies</td>
+              <td>Kaduna, Nigeria</td>
+            </tr>
+            <tr>
+              <td>Current</td>
+              <td>Miva Open University, Cyber Security</td>
+              <td>Online / Nigeria</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TECHNICAL SKILLS SECTION: A grid of skill "chips" rather than a
+         numbered list, these are parallel items with no inherent order,
+         numbering them (01, 02, 03...) would incorrectly suggest a
+         ranking or sequence. Each chip carries a category label in the
+         monospace utility font, tying back into the terminal/system
+         visual language set up on the homepage. -->
+    <section class="skills-section">
+      <div class="section-heading">
+        <span class="eyebrow">Skills</span>
+        <h2>Technical Skills</h2>
+        <p class="skills-note">Built through the COS 106 coursework this site itself is a product of, alongside my ongoing Cyber Security studies.</p>
+      </div>
+
+      <ul class="skills-grid">
+        <li class="skill-chip"><span class="skill-cat">core</span>HTML5</li>
+        <li class="skill-chip"><span class="skill-cat">core</span>CSS3</li>
+        <li class="skill-chip"><span class="skill-cat">core</span>JavaScript</li>
+        <li class="skill-chip"><span class="skill-cat">tools</span>Git &amp; GitHub</li>
+        <li class="skill-chip"><span class="skill-cat">focus</span>Cyber Security fundamentals</li>
+      </ul>
+    </section>
+
+    <!-- CAREER ASPIRATIONS SECTION: Plain prose works best here, this is
+         a personal statement, not a data set, so no list or table is
+         forced onto it just for variety. -->
+    <section class="aspirations-section">
+      <div class="section-heading">
+        <span class="eyebrow">Where I'm Headed</span>
+        <h2>Career Aspirations</h2>
+      </div>
+      <p class="aspirations-text">
+        I am working toward a switch in career path, moving into the tech
+        industry through Cyber Security. Alongside that transition, my
+        goal is steady advancement once I am in, building real skills,
+        taking on more responsibility, and growing a long term career in
+        the space rather than just breaking into it.
+      </p>
+    </section>
+
+    <!-- HOBBIES SECTION: A short, human closing section so the page
+         does not end purely on skills and ambition, the brief asks for
+         hobbies and interests specifically. -->
+    <section class="hobbies-section">
+      <div class="section-heading">
+        <span class="eyebrow">Outside The Keyboard</span>
+        <h2>Hobbies &amp; Interests</h2>
+      </div>
+      <ul class="hobbies-list">
+        <li>Gaming</li>
+        <li>Studying new topics</li>
+        <li>Listening to music</li>
+      </ul>
+    </section>
+
+    <section class="cta-section">
+      <h2>Curious what I've actually built?</h2>
+      <a href="projects.html" class="btn btn-primary">See My Projects</a>
+    </section>
+
+  </main>
+
+  <audio id="bg-audio" loop preload="none" class="bg-audio" aria-hidden="true">
+    <source src="audio/ambient.mp3" type="audio/mpeg">
+  </audio>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-name">Musa James Paul</p>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="planner.html">Planner</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <p class="footer-copy">&copy; 2026 Musa James Paul. COS 106 Portfolio Project, Miva Open University.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
