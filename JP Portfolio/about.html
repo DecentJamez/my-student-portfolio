@@ -54,9 +54,25 @@
         <li><a href="contact.html">Contact</a></li>
       </ul>
 
-      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation menu">
-        <span></span><span></span><span></span>
-      </button>
+      <!-- NAV CONTROLS: Groups the persistent audio toggle with the mobile
+           menu button so both sit together on the right side of the bar on
+           every breakpoint. The audio toggle is a real <button> (not just
+           part of the popup) so a visitor can turn the background track on
+           or off at any point while browsing, on any page, not only in the
+           moment the popup first appears. Its dot and label are updated by
+           main.js in response to the audio element's own "play"/"pause"
+           events, so it always reflects what is actually happening rather
+           than an assumed state. -->
+      <div class="nav-controls">
+        <button type="button" class="audio-toggle" id="audio-toggle" aria-pressed="false" aria-label="Turn background music on">
+          <span class="audio-toggle-dot" aria-hidden="true"></span>
+          <span class="audio-toggle-text">Audio: Off</span>
+        </button>
+
+        <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </nav>
   </header>
 
