@@ -160,7 +160,8 @@ const musicPopup = document.getElementById("music-popup");
 const musicYesBtn = document.getElementById("music-yes");
 const musicNoBtn = document.getElementById("music-no");
 const bgAudio = document.getElementById("bg-audio");
-
+const audioToggle = document.getElementById("audio-toggle");
+const audioToggleText = audioToggle.querySelector(".audio-toggle-text");
 /* Hides the popup and, if the visitor is using a screen reader,
    returns keyboard focus to the page body so they are not left
    focused on an element that no longer exists on screen. */
@@ -200,7 +201,41 @@ musicNoBtn.addEventListener("click", () => {
 window.addEventListener("load", () => {
   setTimeout(showMusicPopup, 600);
 });
+/* ============================================================
+   5b. AUDIO ON/OFF TOGGLE
+   ------------------------------------------------------------
+   The popup above only asks once, right after the page loads.
+   This button lives in the nav on every page instead, so a visitor
+   can turn the background track on or off at any point while they
+   browse, not only in the moment the popup happens to be showing.
+   Rather than tracking play/paused state by hand, the toggle just
+   listens to the audio element's own native "play" and "pause"
+   events, so its dot and label always match what is actually
+   happening, no matter whether playback was started from this
+   button, from the popup's "Yes" button, or paused by the browser
+   for some other reason. */
+function setAudioToggleState(isPlaying) {
+  audioToggle.classList.toggle("is-playing", isPlaying);
+  audioToggle.setAttribute("aria-pressed", String(isPlaying));
+  audioToggle.setAttribute("aria-label", isPlaying ? "Turn background music off" : "Turn background music on");
+  audioToggleText.textContent = isPlaying ? "Audio: On" : "Audio: Off";
+}
 
+bgAudio.addEventListener("play", () => setAudioToggleState(true));
+bgAudio.addEventListener("pause", () => setAudioToggleState(false));
+
+/* Clicking the toggle simply asks the audio element to play or
+   pause depending on its current state, .play()'s Promise is
+   caught for the same reason as the popup's "Yes" button above. */
+audioToggle.addEventListener("click", () => {
+  if (bgAudio.paused) {
+    bgAudio.play().catch((error) => {
+      console.warn("Background audio could not start:", error.message);
+    });
+  } else {
+    bgAudio.pause();
+  }
+});
 /* ============================================================
    6. ACADEMIC PLANNER (TASK MANAGER)
    ------------------------------------------------------------
