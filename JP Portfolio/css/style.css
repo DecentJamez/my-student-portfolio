@@ -1349,4 +1349,14 @@ body.popup-open {
   .page-intro {
     padding-top: 7rem;
   }
+     /* Keeps the audio toggle itself but drops its text label, same
+     space-saving idea as hiding the status pill above, the dot alone
+     (plus the button's aria-label) is enough on a narrow screen. */
+  .audio-toggle {
+    padding: 0.4rem;
+  }
+
+  .audio-toggle-text {
+    display: none;
+  }  
 }
